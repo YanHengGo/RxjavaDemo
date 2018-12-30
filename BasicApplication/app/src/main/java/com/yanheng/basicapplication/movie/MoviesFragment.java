@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -21,6 +22,8 @@ import com.yanheng.basicapplication.L;
 import com.yanheng.basicapplication.R;
 import com.yanheng.basicapplication.api.DoubanManager;
 import com.yanheng.basicapplication.api.IDoubanService;
+import com.yanheng.basicapplication.beans.HotMoviesData;
+import com.yanheng.basicapplication.beans.MovieItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,40 +35,31 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MoviesFragment extends Fragment {
+public class MoviesFragment extends Fragment implements MoviesContract.View{
 
     private List<MovieItem> movieItems = new ArrayList<>();
     private RecyclerView recyclerView;
     private MoviesAdapter moviesAdapter;
+    private MoviesContract.Presenter presentor;
 
 
     public MoviesFragment() {
         L.d();
         // Required empty public constructor
     }
+    public static MoviesFragment newInstance(){
+        L.d();
+        return new MoviesFragment();
+    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         L.d();
-        loadMovies(new Callback<HotMoviesData>() {
-            @Override
-            public void onResponse(Call<HotMoviesData> call, Response<HotMoviesData> response) {
-                L.d();
-                movieItems = response.body().getMovieItems();
-                moviesAdapter.setData(movieItems);
-                int size = movieItems.size();
-                for(int i=0;i<size;i++){
-                    L.d("title = " + movieItems.get(i).getTitle());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<HotMoviesData> call, Throwable t) {
-                L.d();
-            }
-        });
-
+        if(presentor!=null){
+            presentor.start();
+        }
+        L.d();
     }
 
     @Override
@@ -81,11 +75,13 @@ public class MoviesFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        L.d();
         if(recyclerView == null)return;
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity().getApplicationContext() , 2);
         recyclerView.setLayoutManager(gridLayoutManager);
         moviesAdapter = new MoviesAdapter(movieItems, getContext(), R.layout.recycleview_movie_view);
         recyclerView.setAdapter(moviesAdapter);
+        L.d();
     }
 
     private void loadMovies(Callback<HotMoviesData> callback){
@@ -94,6 +90,39 @@ public class MoviesFragment extends Fragment {
         iDoubanService.searchHotMovies().enqueue(callback);
         L.d();
     }
+
+    @Override
+    public void showMovies(List<MovieItem> movieItems) {
+        L.d();
+        moviesAdapter.setData(movieItems);
+        L.d();
+    }
+
+    @Override
+    public void showNoMovies() {
+        L.d();
+    }
+
+    @Override
+    public void setLoadingIndicator(boolean active) {
+        L.d();
+        if(getView()==null)return;
+        L.d();
+        ProgressBar progressBar = (ProgressBar) getView().findViewById(R.id.hotmovies_loading);
+        if(active){
+            progressBar.setVisibility(View.VISIBLE);
+        }else{
+            progressBar.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void setPresentor(MoviesContract.Presenter presentor) {
+        L.d();
+        this.presentor = presentor;
+        L.d();
+    }
+
     class MoviesAdapter extends RecyclerView.Adapter<MoviesViewHolder> {
         private List<MovieItem> movieItems ;
         private final Context context;
@@ -102,6 +131,7 @@ public class MoviesFragment extends Fragment {
         private final int layoutResId ;
 
         public MoviesAdapter(List<MovieItem> movieItems,@NonNull Context context,@LayoutRes int layoutResId) {
+            L.d();
             this.movieItems = movieItems;
             this.context = context;
             this.layoutResId = layoutResId;
@@ -110,6 +140,7 @@ public class MoviesFragment extends Fragment {
         @NonNull
         @Override
         public MoviesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+            L.d();
             View view = LayoutInflater.from(context)
                     .inflate(layoutResId,parent,false);
             return new MoviesViewHolder(view);
@@ -117,6 +148,7 @@ public class MoviesFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull MoviesViewHolder moviesViewHolder, int position) {
+            L.d();
             if(moviesViewHolder == null)return;
             moviesViewHolder.updateMovie(movieItems.get(position));
         }
@@ -126,6 +158,7 @@ public class MoviesFragment extends Fragment {
             return movieItems.size();
         }
         public void setData(List<MovieItem> movieItems){
+            L.d();
             if(movieItems==null)return;
             this.movieItems = movieItems;
             notifyDataSetChanged();
@@ -142,6 +175,7 @@ public class MoviesFragment extends Fragment {
 
         public MoviesViewHolder(@NonNull View itemView) {
             super(itemView);
+            L.d();
             movieImageView = ((ImageView) itemView.findViewById(R.id.movie_imageview));
             movieTitle = ((TextView) itemView.findViewById(R.id.movie_title));
             movieStar = ((RatingBar) itemView.findViewById(R.id.movie_star));
@@ -152,9 +186,11 @@ public class MoviesFragment extends Fragment {
 
                 }
             });
+            L.d();
         }
 
         public void updateMovie(MovieItem movieItem){
+            L.d();
             if(movieItem == null) return;
             Context context = itemView.getContext();
             this.movieItem = movieItem;
@@ -176,6 +212,7 @@ public class MoviesFragment extends Fragment {
             }
 
 
+            L.d();
         }
 
     }

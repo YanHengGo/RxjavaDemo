@@ -15,8 +15,12 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.yanheng.basicapplication.api.DoubanManager;
+import com.yanheng.basicapplication.api.IDoubanService;
 import com.yanheng.basicapplication.book.BooksFragment;
+import com.yanheng.basicapplication.movie.MoviesContract;
 import com.yanheng.basicapplication.movie.MoviesFragment;
+import com.yanheng.basicapplication.movie.MoviesPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        L.d();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -39,21 +44,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         initView();
-
+        L.d();
     }
 
     private void initView() {
+        L.d();
         //view pager
         ViewPager viewPager = (ViewPager) findViewById(R.id.main_viewpager);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        MoviesFragment moviesFragment = new MoviesFragment();
         viewPagerAdapter.addFragment(new BooksFragment(),getApplicationContext().getResources().getString(R.string.hello_books_fragment));
-        viewPagerAdapter.addFragment(new MoviesFragment(),getApplicationContext().getResources().getString(R.string.hello_movies_fragment));
+        viewPagerAdapter.addFragment(moviesFragment,getApplicationContext().getResources().getString(R.string.hello_movies_fragment));
         viewPager.setAdapter(viewPagerAdapter);
         //tab layout
         TabLayout tabLayout = (TabLayout) findViewById(R.id.main_tablayout);
         tabLayout.addTab(tabLayout.newTab());
         tabLayout.addTab(tabLayout.newTab());
         tabLayout.setupWithViewPager(viewPager);
+        //
+        createPresenter(moviesFragment);
+        L.d();
+    }
+
+    private void createPresenter(MoviesContract.View fragmentView){
+        L.d();
+        new MoviesPresenter(fragmentView,DoubanManager.createDoubanService());
+        L.d();
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -65,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public void addFragment (Fragment fragment , String title){
+            L.d();
             fragments.add(fragment);
             fragmentTitles.add(title);
         }

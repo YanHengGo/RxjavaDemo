@@ -1,4 +1,4 @@
-package com.yanheng.basicapplication.movie;
+package com.yanheng.basicapplication.beans;
 
 import java.util.List;
 

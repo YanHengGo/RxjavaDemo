@@ -24,5 +24,9 @@
         </android.support.v7.widget.RecyclerView>
         
     </LinearLayout>
-
+    <ProgressBar
+        android:id="@+id/hotmovies_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
 </FrameLayout>

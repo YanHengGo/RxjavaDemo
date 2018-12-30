@@ -1,6 +1,6 @@
 package com.yanheng.basicapplication.api;
 
-import com.yanheng.basicapplication.movie.HotMoviesData;
+import com.yanheng.basicapplication.beans.HotMoviesData;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

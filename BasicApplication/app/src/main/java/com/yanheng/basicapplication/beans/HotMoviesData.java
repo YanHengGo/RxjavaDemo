@@ -1,4 +1,4 @@
-package com.yanheng.basicapplication.movie;
+package com.yanheng.basicapplication.beans;
 
 import com.google.gson.annotations.SerializedName;
 
