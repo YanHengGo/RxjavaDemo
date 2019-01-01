@@ -1,6 +1,7 @@
 package com.yanheng.basicapplication.movieDetail;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,13 +12,13 @@ import android.widget.TextView;
 import com.yanheng.basicapplication.ConstContent;
 import com.yanheng.basicapplication.L;
 import com.yanheng.basicapplication.R;
+import com.yanheng.basicapplication.webview.WebViewActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MovieDetailFragment extends Fragment {
 
-    private String url;
     private String linkUrl;
 
     public MovieDetailFragment() {
@@ -46,7 +47,9 @@ public class MovieDetailFragment extends Fragment {
             tvinfo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    L.d();
+                    Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                    intent.putExtra(ConstContent.INTENT_EXTRA_WEBSITE_URL, linkUrl);
+                    startActivity(intent);
                 }
             });
         }
