@@ -1,8 +1,9 @@
 package com.yanheng.basicapplication.beans;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class MovieItem {
+public class MovieItem implements Serializable {
 
     /**
      * rating : {"max":10,"average":6.3,"stars":"35","min":0}
@@ -128,7 +129,7 @@ public class MovieItem {
         this.directors = directors;
     }
 
-    public static class RatingBean {
+    public static class RatingBean implements Serializable{
         /**
          * max : 10
          * average : 6.3
@@ -174,7 +175,7 @@ public class MovieItem {
         }
     }
 
-    public static class ImagesBean {
+    public static class ImagesBean implements Serializable{
         /**
          * small : https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2542268337.webp
          * large : https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2542268337.webp
@@ -210,7 +211,7 @@ public class MovieItem {
         }
     }
 
-    public static class CastsBean {
+    public static class CastsBean implements Serializable{
         /**
          * alt : https://movie.douban.com/celebrity/1009179/
          * avatars : {"small":"https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1542346320.44.webp","large":"https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1542346320.44.webp","medium":"https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1542346320.44.webp"}
@@ -255,7 +256,7 @@ public class MovieItem {
             this.id = id;
         }
 
-        public static class AvatarsBean {
+        public static class AvatarsBean implements Serializable{
             /**
              * small : https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1542346320.44.webp
              * large : https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1542346320.44.webp
@@ -292,7 +293,7 @@ public class MovieItem {
         }
     }
 
-    public static class DirectorsBean {
+    public static class DirectorsBean implements Serializable{
         /**
          * alt : https://movie.douban.com/celebrity/1321152/
          * avatars : {"small":"https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1483685290.54.webp","large":"https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1483685290.54.webp","medium":"https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1483685290.54.webp"}
@@ -337,7 +338,7 @@ public class MovieItem {
             this.id = id;
         }
 
-        public static class AvatarsBeanX {
+        public static class AvatarsBeanX implements Serializable{
             /**
              * small : https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1483685290.54.webp
              * large : https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1483685290.54.webp

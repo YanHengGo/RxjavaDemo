@@ -1,11 +1,15 @@
 package com.yanheng.basicapplication.movie;
 
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +28,7 @@ import com.yanheng.basicapplication.api.DoubanManager;
 import com.yanheng.basicapplication.api.IDoubanService;
 import com.yanheng.basicapplication.beans.HotMoviesData;
 import com.yanheng.basicapplication.beans.MovieItem;
+import com.yanheng.basicapplication.movieDetail.MovieDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -173,7 +178,7 @@ public class MoviesFragment extends Fragment implements MoviesContract.View{
         private final TextView movieScore;
         private MovieItem movieItem;
 
-        public MoviesViewHolder(@NonNull View itemView) {
+        public MoviesViewHolder(@NonNull final View itemView) {
             super(itemView);
             L.d();
             movieImageView = ((ImageView) itemView.findViewById(R.id.movie_imageview));
@@ -183,6 +188,18 @@ public class MoviesFragment extends Fragment implements MoviesContract.View{
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(movieItem==null || itemView == null)return;
+                    Context context = itemView.getContext();
+                    if(context==null)return;
+                    Intent intent = new Intent(context , MovieDetailActivity.class);
+                    intent.putExtra("movie",movieItem);
+
+                    if(context instanceof Activity){
+                        Activity activity = (Activity)context;
+
+                        Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(activity,movieImageView,"cover").toBundle();
+                        ActivityCompat.startActivity(activity,intent,bundle);
+                    }
 
                 }
             });
