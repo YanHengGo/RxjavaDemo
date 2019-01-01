@@ -41,7 +41,7 @@ public class MovieDetailFragment extends Fragment {
         TextView tvinfo = (TextView) view.findViewById(R.id.tvinfo);
         tvinfo.setText(getArguments().getString(ConstContent.INTENT_EXTRA_FRAGMENT_INFO));
 
-        if(ConstContent.INTENT_EXTRA_WEBSITE_URL == getArguments().getString(ConstContent.INTENT_EXTRA_FRAGMENT_TYPE)){
+        if(ConstContent.TYPE_MOVIE_WEBSITE == getArguments().getInt(ConstContent.INTENT_EXTRA_FRAGMENT_TYPE)){
             linkUrl = tvinfo.getText().toString();
             tvinfo.setOnClickListener(new View.OnClickListener() {
                 @Override
